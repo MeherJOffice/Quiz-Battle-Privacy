@@ -71,6 +71,17 @@
     .link a:hover {
       text-decoration: underline;
     }
+    .response-item a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .response-item .new-value {
+      color: green;
+      font-weight: bold;
+    }
+    .response-item a:hover {
+      text-decoration: underline;
+    }
     .processing {
       display: none;
       text-align: center;
@@ -144,7 +155,7 @@
       });
       const data = await response.json();
       showProcessing(false);
-      showResponse(data.message || data.error);
+      showResponse(link, newValue, data.message || data.error);
     }
 
     function showProcessing(show) {
@@ -152,12 +163,16 @@
       processingDiv.style.display = show ? 'block' : 'none';
     }
 
-    function showResponse(message) {
+    function showResponse(link, newValue, message) {
       const responseDiv = document.getElementById('response');
       responseDiv.innerHTML = '';  // Clear previous response
       const div = document.createElement('div');
       div.className = 'response-item';
-      div.textContent = message;
+      div.innerHTML = `
+        <p>Link: <a href="${link}" target="_blank">${link}</a></p>
+        <p>New Value: <span class="new-value">${newValue}</span></p>
+        <p>${message}</p>
+      `;
       responseDiv.appendChild(div);
     }
   </script>
